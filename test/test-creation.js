@@ -32,7 +32,7 @@ describe('aster generator', function () {
 			'index.js',
 			'LICENSE',
 			'README.md',
-			'test.js'
+			'test/test.js'
 		];
 
 		this.app.userInfo = function () {
@@ -45,6 +45,7 @@ describe('aster generator', function () {
 		};
 
 		helpers.mockPrompt(this.app, {
+			name: 'aster-do-smth',
 			'authorLogin': 'johndoe'
 		});
 
