@@ -1,19 +1,23 @@
+/* global describe, it */
+
+'use strict';
+
 var assert = require('assert'),
 	aster = require('aster'),
 	parse = require('esprima').parse,
-	renameIds = require('./');
+	renameIds = require('..');
 
 describe('Initialization', function () {
 	// Put initialization-safety tests here if needed
 
 	it('checks options.from', function () {
-		assert.throws(renameIds({to: ''})());
-		assert.throws(renameIds({from: '', to: ''})());
+		assert.throws(renameIds.bind(null, {to: ''}));
+		assert.throws(renameIds.bind(null, {from: '', to: ''}));
 	});
 
 	it('checks options.to', function () {
-		assert.throws(renameIds({from: /^_/})());
-		assert.throws(renameIds({from: /^_/, to: 10})());
+		assert.throws(renameIds.bind(null, {from: /^_/}));
+		assert.throws(renameIds.bind(null, {from: /^_/, to: 10}));
 	});
 });
 
@@ -39,11 +43,7 @@ describe('Transformation', function () {
 			manglePrivates = renameIds({
 				from: /^p_(.*)$/,
 				to: function (name) {
-					if (name in map) {
-						return map[name];
-					} else {
-						return map[name] = '$' + autoIncrement++;
-					}
+					return map[name] || (map[name] = '$' + autoIncrement++);
 				}
 			});
 

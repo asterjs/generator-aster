@@ -39,7 +39,7 @@ function githubUserInfo(name, callback) {
 
 function AsterGenerator(args, options) {//, config) {
 	yeoman.generators.Base.apply(this, arguments);
-	this.argument('name', {type: String});
+	this.argument('name', {type: String, required: false});
 
 	this.on('end', function () {
 		this.installDependencies({ bower: false, skipInstall: options['skip-install'] });
@@ -89,9 +89,8 @@ AsterGenerator.prototype.askFor = function askFor() {
 AsterGenerator.prototype.userInfo = function userInfo() {
 	var done = this.async();
 
-	githubUserInfo(this.author.login, function (res) {
-		/*jshint camelcase:false */
-		this.author = res;
+	githubUserInfo(this.author.login, function (author) {
+		this.author = author;
 		done();
 	}.bind(this));
 };
@@ -102,11 +101,12 @@ AsterGenerator.prototype.gitfiles = function gitfiles() {
 };
 
 AsterGenerator.prototype.app = function app() {
-	this.copy('index.js', 'index.js');
-	this.copy('test.js', 'test.js');
 	this.copy('_package.json', 'package.json');
-	this.copy('README.md', 'README.md');
+	this.copy('index.js', 'index.js');
+	this.copy('test/mocha.opts', 'test/mocha.opts');
+	this.copy('test/test.js', 'test/test.js');
 	this.template('LICENSE', 'LICENSE');
+	this.copy('README.md', 'README.md');
 };
 
 AsterGenerator.prototype.projectfiles = function projectfiles() {
