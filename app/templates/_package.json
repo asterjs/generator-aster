@@ -2,6 +2,9 @@
   "name": "<%= pkgName %>",
   "version": "0.0.0",
   "description": "<%= name %> with aster.",
+  "author": "<%= author.name %> <<%= author.email %>> (<%= author.html_url %>)",
+  "repository": "<%= author.login %>/<%= pkgName %>",
+  "license": "MIT",
   "keywords": [
     "aster-plugin",
     "ast",
@@ -13,20 +16,6 @@
   "scripts": {
     "test": "mocha"
   },
-  "repository": {
-    "type": "git",
-    "url": "<%= author.html_url %>/<%= pkgName %>.git"
-  },
-  "author": {
-    "name": "<%= author.name %>",
-    "email": "<%= author.email %>",
-    "url": "<%= author.html_url %>"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "<%= author.html_url %>/<%= pkgName %>/issues"
-  },
-  "homepage": "<%= author.html_url %>/<%= pkgName %>",
   "dependencies": {
     "aster": "*"
   },
