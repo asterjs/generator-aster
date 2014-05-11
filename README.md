@@ -1,6 +1,8 @@
-# generator-aster [![Build Status](https://secure.travis-ci.org/asterjs/generator-aster.png?branch=master)](https://travis-ci.org/asterjs/generator-aster)
+# generator-aster
+[![Build Status](https://secure.travis-ci.org/asterjs/generator-aster.png?branch=master)](https://travis-ci.org/asterjs/generator-aster)
+[![NPM version](https://badge.fury.io/js/generator-aster.png)](https://npmjs.org/package/generator-aster)
 
-> [Yeoman](http://yeoman.io) generator
+> [Yeoman](http://yeoman.io) generator for [aster](https://github.com/asterjs/aster) plugins
 
 
 ## Getting Started

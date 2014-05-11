@@ -1,6 +1,6 @@
 {
   "name": "generator-aster",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Yeoman generator for aster plugins",
   "license": "MIT",
   "main": "app/index.js",
@@ -24,7 +24,7 @@
   ],
   "keywords": [
     "yeoman-generator",
-    "aster-plugin",
+    "aster",
     "ast",
     "javascript",
     "transform",
@@ -32,6 +32,7 @@
     "modify"
   ],
   "dependencies": {
+    "github": "^0.1.16",
     "yeoman-generator": "~0.16.0",
     "chalk": "~0.4.0",
     "yosay": "^0.1.0"
