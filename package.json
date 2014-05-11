@@ -1,7 +1,7 @@
 {
   "name": "generator-aster",
   "version": "0.0.0",
-  "description": "Yeoman generator",
+  "description": "Yeoman generator for aster plugins",
   "license": "MIT",
   "main": "app/index.js",
   "repository": "RReverser/generator-aster",
