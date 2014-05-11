@@ -1,4 +1,4 @@
-# generator-aster [![Build Status](https://secure.travis-ci.org/RReverser/generator-aster.png?branch=master)](https://travis-ci.org/RReverser/generator-aster)
+# generator-aster [![Build Status](https://secure.travis-ci.org/asterjs/generator-aster.png?branch=master)](https://travis-ci.org/asterjs/generator-aster)
 
 > [Yeoman](http://yeoman.io) generator
 

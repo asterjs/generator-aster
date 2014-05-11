@@ -4,7 +4,10 @@
   "description": "Yeoman generator for aster plugins",
   "license": "MIT",
   "main": "app/index.js",
-  "repository": "RReverser/generator-aster",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/asterjs/generator-aster.git"
+  },
   "author": {
     "name": "Ingvar Stepanyan",
     "email": "me@rreverser.com",
@@ -20,7 +23,13 @@
     "app"
   ],
   "keywords": [
-    "yeoman-generator"
+    "yeoman-generator",
+    "aster-plugin",
+    "ast",
+    "javascript",
+    "transform",
+    "pipe",
+    "modify"
   ],
   "dependencies": {
     "yeoman-generator": "~0.16.0",
