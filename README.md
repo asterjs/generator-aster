@@ -34,7 +34,9 @@ $ npm install -g generator-aster
 Finally, initiate the generator:
 
 ```bash
-$ yo aster
+$ mkdir aster-super-plugin
+$ cd aster-super-plugin
+$ yo aster "super plugin"
 ```
 
 ### Getting To Know Yeoman
