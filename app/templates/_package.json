@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "<%= name %> with aster.",
   "author": "<%= author.name %> <<%= author.email %>> (<%= author.html_url %>)",
-  "repository": "<%= author.login %>/<%= pkgName %>",
+  "repository": "<%= slug %>",
   "license": "MIT",
   "keywords": [
     "aster-plugin",

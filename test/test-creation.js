@@ -36,7 +36,7 @@ describe('aster generator', function () {
 		];
 
 		this.app.userInfo = function () {
-			this.author = {
+			this.owner = this.author = {
 				'name': 'John Doe',
 				'email': 'john@doe.com',
 				'login': 'johndoe',
@@ -46,7 +46,7 @@ describe('aster generator', function () {
 
 		helpers.mockPrompt(this.app, {
 			name: 'aster-do-smth',
-			'authorLogin': 'johndoe'
+			'ownerLogin': 'johndoe'
 		});
 
 		this.app.options['skip-install'] = true;

@@ -33,7 +33,7 @@ function githubUserInfo(name, callback) {
 			throw err;
 		}
 
-		callback(JSON.parse(JSON.stringify(res)));
+		callback(res);
 	});
 }
 
@@ -63,8 +63,8 @@ AsterGenerator.prototype.askFor = function askFor() {
 			default: this.name
 		},
 		{
-			name: 'authorLogin',
-			message: 'Would you mind telling me your username on GitHub?'
+			name: 'ownerLogin',
+			message: 'Would you mind telling me owner\'s (your or organization) username on GitHub?'
 		}
 	];
 
@@ -73,12 +73,12 @@ AsterGenerator.prototype.askFor = function askFor() {
 			throw new Error('Plugin name is required.');
 		}
 
-		if (!props.authorLogin) {
+		if (!props.ownerLogin) {
 			throw new Error('Author\'s username is required.');
 		}
 
 		this.name = this._.humanize(props.name);
-		this.author = {login: props.authorLogin};
+		this.ownerLogin = props.ownerLogin;
 		this.pkgName = 'aster-' + this._.slugify(props.name);
 		this.varName = this._.camelize(props.name.toLowerCase());
 
@@ -89,9 +89,26 @@ AsterGenerator.prototype.askFor = function askFor() {
 AsterGenerator.prototype.userInfo = function userInfo() {
 	var done = this.async();
 
-	githubUserInfo(this.author.login, function (author) {
-		this.author = author;
-		done();
+	githubUserInfo(this.ownerLogin, function (owner) {
+		this.owner = owner;
+		this.slug = this.owner.login + '/' + this.pkgName;
+
+		if (owner.type === 'Organization') {
+			var prompts = [{
+				name: 'authorLogin',
+				message: 'Ok, it was owning organization, but what is your usename?'
+			}];
+
+			this.prompt(prompts, function (props) {
+				githubUserInfo(props.authorLogin, function (author) {
+					this.author = author;
+					done();
+				}.bind(this));
+			}.bind(this));
+		} else {
+			this.author = this.owner;
+			done();
+		}
 	}.bind(this));
 };
 

@@ -47,5 +47,5 @@ Replacement for given identifier patterns.
 [npm-url]: https://npmjs.org/package/<%= pkgName %>
 [npm-image]: https://badge.fury.io/js/<%= pkgName %>.png
 
-[travis-url]: http://travis-ci.org/<%= author.login %>/<%= pkgName %>
-[travis-image]: https://secure.travis-ci.org/<%= author.login %>/<%= pkgName %>.png?branch=master
+[travis-url]: http://travis-ci.org/<%= slug %>
+[travis-image]: https://secure.travis-ci.org/<%= slug %>.png?branch=master
