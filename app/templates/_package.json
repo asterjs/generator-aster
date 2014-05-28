@@ -16,10 +16,8 @@
   "scripts": {
     "test": "mocha"
   },
-  "dependencies": {
-    "rx": "^2.2.0"
-  },
   "devDependencies": {
-    "mocha": "*"
+    "mocha": "*",
+    "rx": "^2.2.0"
   }
 }
