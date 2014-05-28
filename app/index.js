@@ -126,7 +126,7 @@ AsterGenerator.prototype.userInfo = function userInfo() {
 		self.prompt([{
 			name: 'createRepo',
 			type: 'confirm',
-			message: 'Do you want to create repo ' + self.slug + ' for this plugin?',
+			message: 'Do you want to create repo ' + self.author.login + '/' + self.pkgName + ' for this plugin?',
 			default: false
 		}], function (props) {
 			if (props.createRepo) {
