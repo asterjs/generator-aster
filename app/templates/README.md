@@ -2,7 +2,7 @@
 [![NPM version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
 
-> <%= name %> with aster.
+> <%= description %>
 
 ## Usage
 
@@ -15,30 +15,30 @@ npm install --save-dev <%= pkgName %>
 Then, add it to your build script:
 
 ```javascript
+var aster = require('aster');
 var <%= varName %> = require('<%= pkgName %>');
 
-aster
-    .src('src/**/*.js')
-    .then(<%= varName %>({
-        from: /^p_(.*)$/,
-        to: '$1'
-    }))
-    .then(aster.dest('dist'));
+var files = aster.src('src/**/*.js');
+
+var transformed = <%= varName %>(files, {
+  stringOption: 'value'
+});
+
+aster.dest(transformed, 'dist').subscribe(
+  function (file) { console.log('%s processed successfully.', file.loc.source) },
+  function (err) { console.error('Error: %s', err) },
+  function () { console.log('Completed.') }
+);
 ```
 
 ## API
 
 ### <%= varName %>(options)
 
-#### options.from
-Type: `RegExp`
+#### options.stringOption
+Type: `String`
 
-Pattern for identifiers you want to rename.
-
-#### options.to
-Type: `String` | `Function`
-
-Replacement for given identifier patterns.
+Some string option.
 
 ## License
 

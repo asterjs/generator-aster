@@ -37,6 +37,16 @@ function githubUserInfo(name, callback) {
 	});
 }
 
+function githubCreateRepo(options, callback) {
+	github.repos.create(options, function (err, res) {
+		if (err) {
+			throw err;
+		}
+
+		callback(res);
+	});
+}
+
 function AsterGenerator(args, options) {//, config) {
 	yeoman.generators.Base.apply(this, arguments);
 	this.argument('name', {type: String, required: false});
@@ -78,6 +88,7 @@ AsterGenerator.prototype.askFor = function askFor() {
 		}
 
 		this.name = this._.humanize(props.name);
+		this.description = this.name + ' with aster.';
 		this.ownerLogin = props.ownerLogin;
 		this.pkgName = 'aster-' + this._.slugify(props.name);
 		this.varName = this._.camelize(props.name.toLowerCase());
@@ -102,14 +113,39 @@ AsterGenerator.prototype.userInfo = function userInfo() {
 			this.prompt(prompts, function (props) {
 				githubUserInfo(props.authorLogin, function (author) {
 					this.author = author;
-					done();
+					shouldCreateRepo();
 				}.bind(this));
 			}.bind(this));
 		} else {
 			this.author = this.owner;
-			done();
+			shouldCreateRepo();
 		}
 	}.bind(this));
+
+	var shouldCreateRepo = (function () {
+		var prompts = [{
+			name: 'createRepo',
+			type: 'confirm',
+			message: 'Do you want to create repo ' + this.slug + ' for this plugin?',
+			default: false
+		}];
+
+		this.prompt(prompts, function (props) {
+			if (props.createRepo) {
+				githubCreateRepo({
+					name: this.pkgName,
+					description: this.description,
+					homepage: 'https://npmjs.org/package/' + this.pkgName,
+					has_wiki: false,
+					has_downloads: false
+				}, function () {
+					done();
+				});
+			} else {
+				done();
+			}
+		}.bind(this));
+	}).bind(this);
 };
 
 AsterGenerator.prototype.gitfiles = function gitfiles() {

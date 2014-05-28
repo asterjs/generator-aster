@@ -1,7 +1,7 @@
 {
   "name": "<%= pkgName %>",
   "version": "0.0.0",
-  "description": "<%= name %> with aster.",
+  "description": "<%= description %>",
   "author": "<%= author.name %> <<%= author.email %>> (<%= author.html_url %>)",
   "repository": "<%= slug %>",
   "license": "MIT",

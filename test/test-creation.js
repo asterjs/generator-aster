@@ -45,7 +45,7 @@ describe('aster generator', function () {
 		};
 
 		helpers.mockPrompt(this.app, {
-			name: 'aster-do-smth',
+			name: 'do smth',
 			'ownerLogin': 'johndoe'
 		});
 
