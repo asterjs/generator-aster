@@ -5,6 +5,7 @@ var url = require('url');
 var path = require('path');
 var yeoman = require('yeoman-generator');
 var GitHubApi = require('github');
+var exec = require('child_process').exec;
 
 /* jshint -W106 */
 var proxy = process.env.http_proxy || process.env.HTTP_PROXY || process.env.https_proxy || process.env.HTTPS_PROXY || null;
@@ -98,54 +99,69 @@ AsterGenerator.prototype.askFor = function askFor() {
 };
 
 AsterGenerator.prototype.userInfo = function userInfo() {
-	var done = this.async();
+	var self = this,
+		done = this.async();
 
-	githubUserInfo(this.ownerLogin, function (owner) {
-		this.owner = owner;
-		this.slug = this.owner.login + '/' + this.pkgName;
+	githubUserInfo(self.ownerLogin, function (owner) {
+		self.owner = owner;
+		self.slug = self.owner.login + '/' + self.pkgName;
 
 		if (owner.type === 'Organization') {
-			var prompts = [{
+			self.prompt([{
 				name: 'authorLogin',
 				message: 'Ok, it was owning organization, but what is your usename?'
-			}];
-
-			this.prompt(prompts, function (props) {
+			}], function (props) {
 				githubUserInfo(props.authorLogin, function (author) {
-					this.author = author;
+					self.author = author;
 					shouldCreateRepo();
-				}.bind(this));
-			}.bind(this));
+				});
+			});
 		} else {
-			this.author = this.owner;
+			self.author = self.owner;
 			shouldCreateRepo();
 		}
-	}.bind(this));
+	});
 
-	var shouldCreateRepo = (function () {
-		var prompts = [{
+	function shouldCreateRepo() {
+		self.prompt([{
 			name: 'createRepo',
 			type: 'confirm',
-			message: 'Do you want to create repo ' + this.slug + ' for this plugin?',
+			message: 'Do you want to create repo ' + self.slug + ' for this plugin?',
 			default: false
-		}];
-
-		this.prompt(prompts, function (props) {
+		}], function (props) {
 			if (props.createRepo) {
-				githubCreateRepo({
-					name: this.pkgName,
-					description: this.description,
-					homepage: 'https://npmjs.org/package/' + this.pkgName,
-					has_wiki: false,
-					has_downloads: false
-				}, function () {
-					done();
+				self.prompt([{
+					name: 'password',
+					type: 'password',
+					message: 'I need to know your password on GitHub then.'
+				}], function (props) {
+					github.authenticate({
+						type: 'basic',
+						username: self.author.login,
+						password: props.password
+					});
+
+					githubCreateRepo({
+						name: self.pkgName,
+						description: self.description,
+						homepage: 'https://npmjs.org/package/' + self.pkgName,
+						has_wiki: false,
+						has_downloads: false
+					}, function (repo) {
+						exec('git clone ' + repo.clone_url + ' .', function (error) {
+							if (error) {
+								throw error;
+							}
+
+							done();
+						});
+					});
 				});
 			} else {
 				done();
 			}
-		}.bind(this));
-	}).bind(this);
+		});
+	}
 };
 
 AsterGenerator.prototype.gitfiles = function gitfiles() {
