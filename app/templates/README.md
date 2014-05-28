@@ -18,13 +18,12 @@ Then, add it to your build script:
 var aster = require('aster');
 var <%= varName %> = require('<%= pkgName %>');
 
-var files = aster.src('src/**/*.js');
-
-var transformed = <%= varName %>(files, {
+aster.src('src/**/*.js')
+.map(<%= varName %>({
   stringOption: 'value'
-});
-
-aster.dest(transformed, 'dist').subscribe(
+}))
+.map(aster.dest('dist'))
+.subscribe(
   function (file) { console.log('%s processed successfully.', file.loc.source) },
   function (err) { console.error('Error: %s', err) },
   function () { console.log('Completed.') }

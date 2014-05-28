@@ -28,8 +28,15 @@ it('test', function (done) {
 			}
 		}];
 
-	<%= varName %>(Rx.Observable.fromArray(input))
+	// simulating sequence of file subsequences
+	Rx.Observable.return(Rx.Observable.fromArray(input))
+	// applying transformation to each file sequence
+	.map(<%= varName %>({
+	  stringOption: 'value'
+	}))
+	// checking against array of expected results iteratively
 	.zip(expected, assert.deepEqual)
+	// subscribing to check results
 	.subscribe(function () {}, done, done);
 });
 
