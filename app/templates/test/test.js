@@ -28,12 +28,10 @@ it('test', function (done) {
 			}
 		}];
 
-	// simulating sequence of file subsequences
-	Rx.Observable.return(Rx.Observable.fromArray(input))
-	// applying transformation to each file sequence
-	.map(<%= varName %>({
+	// simulating file sequence and applying transformation
+	<%= varName %>({
 	  stringOption: 'value'
-	}))
+	})(Rx.Observable.fromArray(input))
 	// checking against array of expected results iteratively
 	.zip(expected, assert.deepEqual)
 	// subscribing to check results
