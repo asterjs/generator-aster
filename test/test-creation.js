@@ -46,7 +46,8 @@ describe('aster generator', function () {
 
 		helpers.mockPrompt(this.app, {
 			name: 'do smth',
-			'ownerLogin': 'johndoe'
+			description: 'Does something with aster.',
+			ownerLogin: 'johndoe'
 		});
 
 		this.app.options['skip-install'] = true;

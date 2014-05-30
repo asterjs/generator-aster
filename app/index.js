@@ -62,40 +62,46 @@ function AsterGenerator(args, options) {//, config) {
 util.inherits(AsterGenerator, yeoman.generators.Base);
 
 AsterGenerator.prototype.askFor = function askFor() {
-	var done = this.async();
+	var self = this,
+		done = this.async();
 
 	// have Yeoman greet the user.
-	console.log(this.yeoman);
+	console.log(self.yeoman);
 
-	var prompts = [
-		{
-			name: 'name',
-			message: 'What is short purpose / name of your plugin? (i.e. "rename ids")',
-			default: this.name
-		},
-		{
-			name: 'ownerLogin',
-			message: 'Would you mind telling me owner\'s (your or organization) username on GitHub?'
-		}
-	];
-
-	this.prompt(prompts, function (props) {
+	self.prompt([{
+		name: 'name',
+		message: 'What is short name (i.e. "rename ids") of your plugin?',
+		default: self.name
+	}], function (props) {
 		if (!props.name) {
 			throw new Error('Plugin name is required.');
 		}
 
-		if (!props.ownerLogin) {
-			throw new Error('Author\'s username is required.');
-		}
+		self.name = self._.humanize(props.name);
 
-		this.name = this._.humanize(props.name);
-		this.description = this.name + ' with aster.';
-		this.ownerLogin = props.ownerLogin;
-		this.pkgName = 'aster-' + this._.slugify(props.name);
-		this.varName = this._.camelize(props.name.toLowerCase());
+		self.prompt([
+			{
+				name: 'description',
+				message: 'Please provide description:',
+				default: self.name + ' with aster.'
+			},
+			{
+				name: 'ownerLogin',
+				message: 'Would you mind telling me plugin owner\'s (your or organization) login on GitHub?'
+			}
+		], function (props) {
+			if (!props.ownerLogin) {
+				throw new Error('Owner\'s login is required.');
+			}
 
-		done();
-	}.bind(this));
+			self.description = props.description;
+			self.ownerLogin = props.ownerLogin;
+			self.pkgName = 'aster-' + self._.slugify(self.name);
+			self.varName = self._.camelize(self.name.toLowerCase());
+
+			done();
+		});
+	});
 };
 
 AsterGenerator.prototype.userInfo = function userInfo() {
@@ -133,7 +139,7 @@ AsterGenerator.prototype.userInfo = function userInfo() {
 				self.prompt([{
 					name: 'password',
 					type: 'password',
-					message: 'I need to know your password on GitHub then.'
+					message: 'I need to know your password on GitHub then:'
 				}], function (props) {
 					github.authenticate({
 						type: 'basic',
@@ -148,11 +154,7 @@ AsterGenerator.prototype.userInfo = function userInfo() {
 						has_wiki: false,
 						has_downloads: false
 					}, function (repo) {
-						exec('git clone ' + repo.ssh_url + ' .', function (error) {
-							if (error) {
-								throw error;
-							}
-
+						exec('git clone ' + repo.ssh_url + ' .', function () {
 							done();
 						});
 					});

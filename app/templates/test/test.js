@@ -2,7 +2,7 @@
 
 'use strict';
 
-var assert = require('assert'),
+var assert = require('chai').assert,
 	Rx = require('rx'),
 	<%= varName %> = require('..');
 
