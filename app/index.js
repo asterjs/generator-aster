@@ -148,7 +148,7 @@ AsterGenerator.prototype.userInfo = function userInfo() {
 						has_wiki: false,
 						has_downloads: false
 					}, function (repo) {
-						exec('git clone ' + repo.clone_url + ' .', function (error) {
+						exec('git clone ' + repo.ssh_url + ' .', function (error) {
 							if (error) {
 								throw error;
 							}
