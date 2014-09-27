@@ -32,10 +32,10 @@
     "modify"
   ],
   "dependencies": {
-    "github": "^0.1.16",
-    "yeoman-generator": "~0.16.0",
-    "chalk": "~0.4.0",
-    "yosay": "^0.1.0"
+    "chalk": "~0.5.1",
+    "github": "^0.2.2",
+    "yeoman-generator": "~0.17.6",
+    "yosay": "^1.0.0"
   },
   "devDependencies": {
     "mocha": "*"
